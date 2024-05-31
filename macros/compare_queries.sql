@@ -1,8 +1,8 @@
-{% macro compare_queries(a_query, b_query, primary_key=None, summarize=true, limit=None) -%}
+{% macro compare_queries(a_query, b_query, primary_key=None, summarize=true, return_all=false, limit=None) -%}
   {{ return(adapter.dispatch('compare_queries', 'audit_helper')(a_query, b_query, primary_key, summarize, limit)) }}
 {%- endmacro %}
 
-{% macro default__compare_queries(a_query, b_query, primary_key=None, summarize=true, limit=None) %}
+{% macro default__compare_queries(a_query, b_query, primary_key=None, summarize=true, return_all=false, limit=None) %}
 
 with a as (
 
@@ -81,6 +81,7 @@ summary_stats as (
 
 ),
 
+{%- else %}
 final as (
 
     select
@@ -92,13 +93,14 @@ final as (
     order by in_a desc, in_b desc
 
 )
+{%- endif %}
 
 {%- else %}
 
 final as (
     
     select * from all_records
-    where not (in_a and in_b)
+    {% if not return_all %}where not (in_a and in_b){%- endif %}
     order by {{ primary_key ~ ", " if primary_key is not none }} in_a desc, in_b desc
 
 )
