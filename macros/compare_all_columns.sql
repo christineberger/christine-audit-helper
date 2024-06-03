@@ -26,7 +26,7 @@
 
   {% for column_name in column_names %}
 
-    {% set audit_query = audit_helper.compare_column_values_verbose(
+    {% set audit_query = christine_audit_helper.compare_column_values_verbose(
       a_query=a_query,
       b_query=b_query,
       primary_key="dbt_audit_helper_pk",

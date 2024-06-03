@@ -5,11 +5,11 @@
 {% macro default__compare_relation_columns(a_relation, b_relation) %}
 
 with a_cols as (
-    {{ audit_helper.get_columns_in_relation_sql(a_relation) }}
+    {{ christine_audit_helper.get_columns_in_relation_sql(a_relation) }}
 ),
 
 b_cols as (
-    {{ audit_helper.get_columns_in_relation_sql(b_relation) }}
+    {{ christine_audit_helper.get_columns_in_relation_sql(b_relation) }}
 )
 
 select

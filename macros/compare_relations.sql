@@ -29,6 +29,6 @@ select
 from {{ b_relation }}
 {% endset %}
 
-{{ audit_helper.compare_queries(a_query, b_query, primary_key, mode, limit) }}
+{{ christine_audit_helper.compare_queries(a_query, b_query, primary_key, mode, limit) }}
 
 {% endmacro %}
