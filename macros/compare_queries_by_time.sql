@@ -1,5 +1,5 @@
 
-{% macro default__compare_queries_by_time(a_query, b_query, datetime_column, timepart, primary_key=primary_key, a_alias='a', b_alias='b') %}
+{% macro compare_queries_by_time(a_query, b_query, datetime_column, timepart, primary_key=primary_key, a_alias='a', b_alias='b') %}
 -- Built for Databricks SQL
 with
 
