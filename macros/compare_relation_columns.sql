@@ -1,5 +1,5 @@
 {% macro compare_relation_columns(a_relation, b_relation) %}
-  {{ return(adapter.dispatch('compare_relation_columns', 'audit_helper')(a_relation, b_relation)) }}
+  {{ return(adapter.dispatch('compare_relation_columns', 'christine_audit_helper')(a_relation, b_relation)) }}
 {% endmacro %}
 
 {% macro default__compare_relation_columns(a_relation, b_relation) %}

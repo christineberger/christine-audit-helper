@@ -1,5 +1,5 @@
 {% macro compare_column_values_verbose(a_query, b_query, primary_key, column_to_compare) -%}
-  {{ return(adapter.dispatch('compare_column_values_verbose', 'audit_helper')(a_query, b_query, primary_key, column_to_compare)) }}
+  {{ return(adapter.dispatch('compare_column_values_verbose', 'christine_audit_helper')(a_query, b_query, primary_key, column_to_compare)) }}
 {%- endmacro %}
 
 

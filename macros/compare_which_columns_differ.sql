@@ -1,5 +1,5 @@
 {% macro compare_which_columns_differ(a_relation, b_relation, primary_key, exclude_columns=[]) %}
-    {{ return(adapter.dispatch('compare_which_columns_differ', 'audit_helper')(a_relation, b_relation, primary_key, exclude_columns)) }}
+    {{ return(adapter.dispatch('compare_which_columns_differ', 'christine_audit_helper')(a_relation, b_relation, primary_key, exclude_columns)) }}
 {% endmacro %}
 
 {% macro default__compare_which_columns_differ(a_relation, b_relation, primary_key, exclude_columns=[]) %}  

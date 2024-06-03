@@ -1,5 +1,5 @@
 {% macro compare_column_values(a_query, b_query, primary_key, column_to_compare, emojis=True, a_relation_name='a', b_relation_name='b') -%}
-  {{ return(adapter.dispatch('compare_column_values', 'audit_helper')(a_query, b_query, primary_key, column_to_compare, emojis, a_relation_name, b_relation_name)) }}
+  {{ return(adapter.dispatch('compare_column_values', 'christine_audit_helper')(a_query, b_query, primary_key, column_to_compare, emojis, a_relation_name, b_relation_name)) }}
 {%- endmacro %}
 
 {% macro default__compare_column_values(a_query, b_query, primary_key, column_to_compare, emojis, a_relation_name, b_relation_name) -%}
