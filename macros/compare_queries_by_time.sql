@@ -9,7 +9,7 @@ details as (
 
 timepart_agg as (
     select
-        to_date(date_trunc('{{ timepart }}', datetime_column)) as date_{{ timepart }},
+        to_date(date_trunc('{{ timepart }}', {{ datetime_column }})) as date_{{ timepart }},
         in_a,
         in_b,
         count(*) as num_records
@@ -17,11 +17,11 @@ timepart_agg as (
     group by 1, 2, 3
 ),
 
-final as (
+timepart_final as (
     select
         *,
         round(100.0 * num_records / sum(num_records) over (partition by date_{{ timepart }}), 2) as percent_of_total
-    from summary_stats
+    from timepart_agg
     order by in_a desc, in_b desc
 ),
 
@@ -29,23 +29,22 @@ timepart_summary as (
     select
         date_{{ timepart }},
         
-        concat(
-            coalesce(min(case when in_a and in_b then percent_of_total end), 0), '% ('
-            coalesce(min(case when in_a and in_b then count end), 0), ')'
-        ) as perfect_matches,
+        coalesce(min(case when in_a and in_b then percent_of_total end), 0) || '% ('
+        || coalesce(min(case when in_a and in_b then num_records end), 0) || ')'
+        as perfect_matches,
         
-        concat(
-            coalesce(min(case when in_a and not in_b then percent_of_total end), 0), '% ('
-            coalesce(min(case when in_a and not in_b then count end), 0), ')'
-        ) as {{ a_alias }}_diffs,
+        coalesce(min(case when in_a and not in_b then percent_of_total end), 0) || '% ('
+        || coalesce(min(case when in_a and not in_b then num_records end), 0) || ')'
+        as {{ a_alias }}_diffs,
 
-        concat(
-            coalesce(min(case when not in_a and in_b then percent_of_total end), 0), '% ('
-            coalesce(min(case when not in_a and in_b then count end), 0), ')'
-        ) as {{ b_alias }}_diffs
-    from timepart_agg
+        coalesce(min(case when not in_a and in_b then percent_of_total end), 0) || '% ('
+        || coalesce(min(case when not in_a and in_b then num_records end), 0) || ')'
+        as {{ b_alias }}_diffs
+    from timepart_final
+    group by 1
 )
 
 select * from timepart_summary
+order by 1
 
 {% endmacro %}

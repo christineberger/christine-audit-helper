@@ -90,7 +90,7 @@ final as (
 final as (
     
     select * from all_records
-    {% if not return_all %}where not (in_a and in_b){%- endif %}
+    {% if return_all == false %}where not (in_a and in_b){%- endif %}
     order by {{ primary_key ~ ", " if primary_key is not none }} in_a desc, in_b desc
 
 )
