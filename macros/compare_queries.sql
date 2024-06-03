@@ -85,7 +85,7 @@ summary_perc as (
     select
         *,
         round(100.0 * count / sum(count) over (), 2) as percent_of_total
-    from summary_stats
+    from summary_count
     order by in_a desc, in_b desc
 ),
 
