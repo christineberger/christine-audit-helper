@@ -1,5 +1,5 @@
 {% macro compare_queries(a_query, b_query, primary_key=None, mode='summary', return_all=false, limit=None) -%}
-  {{ return(adapter.dispatch('compare_queries', 'audit_helper')(a_query, b_query, primary_key, summarize, limit)) }}
+  {{ return(adapter.dispatch('compare_queries', 'audit_helper')(a_query, b_query, primary_key, mode='summary', limit)) }}
 {%- endmacro %}
 
 {% macro default__compare_queries(a_query, b_query, primary_key=None, mode='summary', return_all=false, limit=None) %}
@@ -124,7 +124,7 @@ final as (
 {%- endif %}
 
 select * from final
-{%- if limit and not summarize %}
+{%- if limit and mode not in ('sumamry', 'text_summary') %}
 limit {{ limit }}
 {%- endif %}
 
